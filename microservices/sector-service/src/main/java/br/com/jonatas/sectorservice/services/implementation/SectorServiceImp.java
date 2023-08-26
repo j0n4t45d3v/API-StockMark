@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class SectorServiceImp implements SectorService {
 
     private final SectorRepository sectorRepository;
+
     @Override
     public String save(Sector sector) {
         this.sectorRepository.findByName(sector.getName())
@@ -32,21 +33,24 @@ public class SectorServiceImp implements SectorService {
 
     @Override
     public String addProduct(String sectorName, Product product) {
-        Sector sectorAlreadyExists = this.sectorRepository.findByName(sectorName)
-                .orElseThrow(() -> new NotFoundException("Setor não encontrado!"));
+        Sector sectorAlreadyExists = this.sectorAlreadyExists(sectorName);
 
         product.setSector(sectorAlreadyExists);
         sectorAlreadyExists.getProducts().add(product);
         this.sectorRepository.save(sectorAlreadyExists);
 
-        return "Produto adicionado!";
+        return "Novo produto adicionado!";
     }
 
     @Override
     public String deleteSector(String sectorName) {
-        Sector sectorAlreadyExists = this.sectorRepository.findByName(sectorName)
-                .orElseThrow(() -> new NotFoundException("Setor não encontrado!"));
-        this.sectorRepository.delete(sectorAlreadyExists);
+        Sector sector = this.sectorAlreadyExists(sectorName);
+        this.sectorRepository.delete(sector);
         return "Setor deletado!";
+    }
+
+    private Sector sectorAlreadyExists(String name) {
+        return this.sectorRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Setor não encontrado!"));
     }
 }

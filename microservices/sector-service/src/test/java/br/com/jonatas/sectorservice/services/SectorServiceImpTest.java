@@ -98,7 +98,7 @@ public class SectorServiceImpTest {
         verify(this.sectorRepository).save(any(Sector.class));
 
         assertNotNull(addProduct);
-        assertEquals("Produto adicionado!", addProduct);
+        assertEquals("Novo produto adicionado!", addProduct);
         assertEquals(1, sector.getProducts().size());
     }
 
