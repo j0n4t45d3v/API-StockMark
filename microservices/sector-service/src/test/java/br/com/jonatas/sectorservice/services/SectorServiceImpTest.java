@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class SectorServiceImpTest {
+class SectorServiceImpTest {
     @Mock
     private SectorRepository sectorRepository;
     @InjectMocks
@@ -56,7 +56,7 @@ public class SectorServiceImpTest {
     @Test
     void shouldReturnSectorNull() {
         when(this.sectorRepository.findByName(anyString())).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> this.service.getByName(anyString()), "Setor encontrado!");
+        assertThrows(NotFoundException.class, () -> this.service.getByName("SETOR"), "Setor encontrado!");
     }
 
     @Test
@@ -104,7 +104,17 @@ public class SectorServiceImpTest {
     @Test
     void shouldAddProductSectorNotFound() {
         when(this.sectorRepository.findByName(anyString())).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> this.service.addProduct("SETOR", Product.builder().build()));
+
+        Product product = Product.builder()
+                .id(UUID.randomUUID())
+                .name("Product 1")
+                .price(10.0)
+                .barcode("123456789")
+                .quantity(10L)
+                .description("Product 1 description")
+                .build();
+
+        assertThrows(NotFoundException.class, () -> this.service.addProduct("SETOR", product));
     }
 
     @Test
