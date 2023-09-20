@@ -6,10 +6,10 @@
   "author": "Jonatas",
   "license": "MIT",
   "type": "module",
-  "scripts":{
-	"test": "jest",
-	"start": "node src/app",
-	"start:dev": "nodemon src/app"
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "start": "node src/app",
+    "start:dev": "nodemon src/app"
   },
   "dependencies": {
     "express": "^4.18.2",
