@@ -68,7 +68,7 @@ class SectorServiceImpTest {
         verify(this.sectorRepository).save(any(Sector.class));
 
         assertNotNull(sectorSaved);
-        assertEquals("Setor criado!", sectorSaved);
+        assertEquals(sector.getId().toString(), sectorSaved);
     }
 
     @Test

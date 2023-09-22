@@ -21,8 +21,8 @@ public class SectorServiceImp implements SectorService {
                 .ifPresent(s -> {
                     throw new ConflictException("Setor já cadastrado!");
                 });
-        this.sectorRepository.save(sector);
-        return "Setor criado!";
+        Sector sectorCreated = this.sectorRepository.save(sector);
+        return sectorCreated.getId().toString();
     }
 
     @Override
